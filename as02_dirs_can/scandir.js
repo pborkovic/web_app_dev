@@ -54,6 +54,7 @@ async function getAllFiles(dir) {
     const files = await Promise.all(
         entries.map(async (entry) => {
             const fullPath = path.join(dir, entry.name);
+
             if (entry.isDirectory()) {
                 return getAllFiles(fullPath);
             } else {
