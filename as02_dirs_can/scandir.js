@@ -3,7 +3,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 if (process.argv.length !== 4) {
-    console.error('Verwendung: node script.js FOLDER HASH');
+    console.error('Needs exactly 4 Arguments');
     console.error('Hash needs to be MD5 or SHA256');
     process.exit(1);
 }
@@ -31,7 +31,7 @@ function calculateHash(filePath) {
             output += data.toString();
         });
         hashProcess.stderr.on('data', (data) => {
-            console.error(`Fehler bei ${filePath}: ${data}`);
+            console.error(`Error att ${filePath}: ${data}`);
         });
         hashProcess.on('close', (code) => {
             if (code === 0) {
@@ -74,16 +74,16 @@ async function main() {
                 const hash = await calculateHash(file);
                 console.log(`${hash}  ${file}`);
             } catch (error) {
-                console.error(`Fehler bei der Verarbeitung von ${file}: ${error.message}`);
+                console.error(`Error at ${file}: ${error.message}`);
             }
         }
     } catch (error) {
-        console.error(`Fehler beim Zugriff auf den Ordner ${FOLDER}: ${error.message}`);
+        console.error(`Error at ${FOLDER}: ${error.message}`);
         process.exit(1);
     }
 }
 
 main().catch(error => {
-    console.error('Ein unerwarteter Fehler ist aufgetreten:', error);
+    console.error('Unexpected error:', error);
     process.exit(1);
 });
